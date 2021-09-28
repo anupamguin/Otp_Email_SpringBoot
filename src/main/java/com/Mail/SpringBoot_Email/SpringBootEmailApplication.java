@@ -1,0 +1,27 @@
+package com.Mail.SpringBoot_Email;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+
+@SpringBootApplication
+public class SpringBootEmailApplication {
+
+	@Autowired
+	private SendEmailService sendEmailService;
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootEmailApplication.class, args);
+	}
+
+	@EventListener(ApplicationReadyEvent.class)
+	public void triggerWhenStarts() {
+		int otp = (int)(double) (Math.random() * 1000000);
+		System.out.println(otp);
+		sendEmailService.sendEmail("anupamguin232@gmail.com", "Hi, Anupam ,Your OTP is "+otp,
+				"Testing OTP Here Anupam Guin");
+	}
+
+}
